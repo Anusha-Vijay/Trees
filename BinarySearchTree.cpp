@@ -1,7 +1,9 @@
 #include <iostream>
 #include <queue>
 #include <vector>
+#include <stack>
 using namespace std;
+
 
 
 class Node{
@@ -10,7 +12,6 @@ public:
     Node* left;
     Node* right;
 public: Node(int val): value(val),left(nullptr),right(nullptr){}
-
 };
 
 class Tree{
@@ -150,6 +151,26 @@ class Tree{
         root->left=temp;
     }
 
+    void printInOrderIterative(Node* root){
+        Node* ptr=root;
+        stack<Node*> stack;
+        bool flag= false;
+        while (!flag){
+            if(ptr!= nullptr){
+                stack.push(ptr);
+                ptr=ptr->left;
+            }
+            else {
+                if (!stack.empty()) {
+                    cout << stack.top()->value<<" ";
+                    ptr = stack.top()->right;
+                    stack.pop();
+                } else
+                flag= true;
+            }
+        }
+    }
+
 public:
     Tree():root(nullptr){};
 
@@ -162,21 +183,21 @@ public:
     void printPostOrderRecurrsive(); //5.done
     void printPreOrderRecurrsive(); //6.done
     void printInOrderRecurrsive(); //7.done
-    void printPath(int path); //8.done
+    void printPath(int); //8.done
     bool isBST(); //9.done
     bool lowestCommonAncestor(int nodeA, int nodeB); //10. Done
     void printTree(); //11.done
     void insertRecurssive(int val); //12.done
     bool hasPath(int path);//13. done
-    bool subTree(Node* s); //18. Done
-    void mirror(); //16
+    bool subTree(Node* ); //14. Done
+    void mirror(); //15. Done
 
 
-    void printInOrderIterative(); //14.
-    void reverseLevelOrderTraversal(); //15.
+    void printInOrderIterative(); //16.
+    void reverseLevelOrderTraversal(); //17.
 };
 
-// [14/17]
+// [15/17]
 
 void Tree::mirror() {
     mirror(root);
@@ -188,9 +209,6 @@ bool Tree::subTree(Node *sroot) {
     return subTree(this->root,sroot);
 
 }
-
-
-
 
 bool Tree::lowestCommonAncestor(int nodeA, int nodeB) {
     vector<int> ancestorA,ancestorB;
@@ -214,7 +232,6 @@ bool Tree::hasPath(int path){
     vector<int> vect;
     hasPath(root,path,vect);
 }
-
 
 void Tree::insertRecurssive(int val){
     root=insertRecurssive(root,val);
@@ -271,6 +288,10 @@ void Tree::printLevelOrder(){
 
 int Tree::maxDepth() {
     return maxDepth(root);
+}
+
+void Tree::printInOrderIterative() {
+    printInOrderIterative(root);
 }
 
 void Tree::printTree() {
@@ -330,9 +351,7 @@ int main() {
     t.printTree();
     cout<<"\nPrinting Tree!\n";
     s.printTree();
-
     cout<<"\nIs s a subtree?\n"<<t.subTree(s.getRoot());
-
     t.printInOrderRecurrsive();
     cout<<"\n Pre Order:\n";
     t.printPreOrderRecurrsive();
@@ -355,5 +374,8 @@ int main() {
     cout<<"\n";
     cout<<"\nAfter Mirror\n";
     t.mirror();
+    t.mirror();
+    cout<<"\n Iterative Solution!:";
+    t.printInOrderIterative();
     return 0;
 }
