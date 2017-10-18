@@ -142,6 +142,14 @@ class Tree{
         return  s!= nullptr && ( equalNode(t,s) || subTree(t->left,s) || subTree(t->right,s));
     }
 
+    void mirror(Node* root){
+        if(root== nullptr)
+            return;
+        Node* temp=root->right;
+        root->right=root->left;
+        root->left=temp;
+    }
+
 public:
     Tree():root(nullptr){};
 
@@ -161,15 +169,19 @@ public:
     void insertRecurssive(int val); //12.done
     bool hasPath(int path);//13. done
     bool subTree(Node* s); //18. Done
+    void mirror(); //16
+
 
     void printInOrderIterative(); //14.
     void reverseLevelOrderTraversal(); //15.
-    void merge(); //16.
-
 };
 
 // [14/17]
 
+void Tree::mirror() {
+    mirror(root);
+    printTree();
+}
 
 
 bool Tree::subTree(Node *sroot) {
@@ -338,5 +350,10 @@ int main() {
     cout<<"\n Max Depth of the Tree is:"<<t.maxDepth();
     cout<<"\nHas common path!";
     t.lowestCommonAncestor(10,7);
+    cout<<"\nBefore Mirror";
+    t.printTree();
+    cout<<"\n";
+    cout<<"\nAfter Mirror\n";
+    t.mirror();
     return 0;
 }
