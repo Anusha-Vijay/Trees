@@ -191,13 +191,11 @@ public:
     bool hasPath(int path);//13. done
     bool subTree(Node* ); //14. Done
     void mirror(); //15. Done
-
-
-    void printInOrderIterative(); //16.
-    void reverseLevelOrderTraversal(); //17.
+    void printInOrderIterative(); //16. Done
+    void reverseLevelOrderTraversal(); //17. Done
 };
 
-// [15/17]
+// [17/17]
 
 void Tree::mirror() {
     mirror(root);
@@ -235,6 +233,11 @@ bool Tree::hasPath(int path){
 
 void Tree::insertRecurssive(int val){
     root=insertRecurssive(root,val);
+}
+
+
+void Tree::printPath(int pathTo) {
+    hasPath(pathTo);
 }
 
 void Tree::insertIterative(int value){
@@ -285,6 +288,28 @@ void Tree::printLevelOrder(){
         q.pop();
     }
 }
+
+
+void Tree::reverseLevelOrderTraversal(){
+    queue<Node*> q;
+    stack<int> stack;
+    q.push(root);
+    while(!q.empty()){
+        stack.push(q.front()->value);
+        if(q.front()->left!= nullptr)
+            q.push(q.front()->left);
+        if(q.front()->right!= nullptr)
+            q.push(q.front()->right);
+        q.pop();
+    }
+
+    while(!stack.empty()){
+        cout<<stack.top()<<"\t";
+        stack.pop();
+    }
+}
+
+
 
 int Tree::maxDepth() {
     return maxDepth(root);
@@ -377,5 +402,9 @@ int main() {
     t.mirror();
     cout<<"\n Iterative Solution!:";
     t.printInOrderIterative();
+    cout<<"\n---Level Order---\n";
+    t.printLevelOrder();
+    cout<<"\n---Reverse Level Order---\n";
+    t.reverseLevelOrderTraversal();
     return 0;
 }
